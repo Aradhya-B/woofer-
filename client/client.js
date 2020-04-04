@@ -1,5 +1,6 @@
 console.log("Hello World");
 
+const API_URL = 'http://localhost:8081/woofs';
 const form = document.querySelector("form");
 const loadingElement = document.querySelector('.loading')
 
@@ -18,8 +19,19 @@ form.addEventListener('submit', (event) => {
         name,
         content
     };
-    console.log(woof);
+
     form.style.display = 'none';
     loadingElement.style.display = '';
+
+    fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(woof),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => res.json())
+      .then(createdWoof => {
+          console.log(createdWoof);
+      });
 })
 
